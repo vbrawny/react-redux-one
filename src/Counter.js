@@ -1,8 +1,20 @@
 import { useDispatch, useSelector } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { useActions } from './use-actions';
 import { decrementAction, incrementAction, setAction } from './actions';
+import { SetCounter } from './SetCounter';
+import { useCounter } from './useCounter';
+
 export const Counter = () => {
   const incident = 'Incident';
-  const count = useSelector((state) => state.count);
+
+  //using custom hook useCounter
+
+  //const [count, actions] = useCounter();
+  const { count, incrementAction, decrementAction, setAction } = useCounter();
+
+  //we can even replace with custom hooks - useCounter
+  //const count = useSelector((state) => state.count);
 
   //useReducer - takes reducer in tht component
   //and you could do in context API
@@ -13,7 +25,8 @@ export const Counter = () => {
   //dispatch
   //so if we need memoizing and caching this works for you.
 
-  const dispatch = useDispatch();
+  //we can replace with custom hook use-actions
+  //const dispatch = useDispatch();
 
   /*
    previously when we use redux, we used connect api to 
@@ -27,16 +40,41 @@ export const Counter = () => {
    the replacement of those two connect API methods.
   */
 
+  /*
+  if we donot like to write dispatch in the below way
+  <button onClick={() => dispatch(incrementAction())}>Increment</button>
+          <button onClick={() => dispatch(setAction(0))}>Reset</button>
+          <button onClick={() => dispatch(decrementAction())}>Decrement</button>
+  then we can use bindActionCreators
+  */
+
+  //we can use custom hook too to put all actions into one
+  // const actions = bindActionCreators(
+  //   { incrementAction, decrementAction, setAction },
+  //   dispatch
+  // );
+  //we can even replace with custom hooks - useCounter
+  //const actions = useActions({ incrementAction, decrementAction, setAction });
+
   return (
-    <main className="Counter">
-      <h1>Days Since Last {incident}</h1>
-      <p className="count">{count}</p>
-      <section className="controls">
-        <button onClick={() => dispatch(incrementAction())}>Increment</button>
-        <button onClick={() => dispatch(setAction(0))}>Reset</button>
-        <button onClick={() => dispatch(decrementAction())}>Decrement</button>
-      </section>
-    </main>
+    <>
+      <main className="Counter">
+        <h1>Days Since Last {incident}</h1>
+        <p className="count">{count}</p>
+        <section className="controls">
+          {/* <button onClick={() => dispatch(incrementAction())}>Increment</button>
+          <button onClick={() => dispatch(setAction(0))}>Reset</button>
+          <button onClick={() => dispatch(decrementAction())}>Decrement</button> */}
+          {/* <button onClick={() => incrementAction()}>Increment</button>
+          <button onClick={() => setAction(0)}>Reset</button>
+          <button onClick={() => decrementAction()}>Decrement</button> */}
+          <button onClick={() => incrementAction()}>Increment</button>
+          <button onClick={() => setAction(0)}>Reset</button>
+          <button onClick={() => decrementAction()}>Decrement</button>
+        </section>
+        <SetCounter />
+      </main>
+    </>
   );
 };
 
