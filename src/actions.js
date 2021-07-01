@@ -1,6 +1,6 @@
-export const INCREMENT = 'increment';
-export const DECREMENT = 'decrement';
-export const SET = 'set';
+export const INCREMENT = 'INCREMENT';
+export const DECREMENT = 'DECREMENT';
+export const SET = 'SET';
 
 export const incrementAction = () => ({ type: INCREMENT });
 
